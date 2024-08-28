@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이미지 검색 시뮬레이션</title>
+    <title>안티딥 - 청소년 딥페이크 피해보호 프로그램</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,6 +12,11 @@
             overflow-x: hidden; /* 수평 스크롤 제거 */
         }
         .logo {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
             width: 100%;
             text-align: center;
             background-color: #f0f0f0;
@@ -21,6 +26,9 @@
             left: 0;
             z-index: 10;
             border-bottom: 1px solid #ccc;
+            font-size: 24px; /* 텍스트 크기를 24px로 설정합니다 */
+            font-family: Arial, sans-serif; /* 텍스트의 폰트를 Arial로 설정합니다 */
+            color: #333;
         }
         .logo img {
             height: 60px; /* 로고의 높이를 조정합니다 */
@@ -37,7 +45,21 @@
             background-color: #f0f0f0;
             display: none; /* 모든 화면을 기본적으로 숨김 */
         }
+        .upload-btn {
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
         .upload-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
             border: 2px dashed #ccc;
             text-align: center;
@@ -66,7 +88,8 @@
 
 <!-- 로고 영역 -->
 <div class="logo">
-    <img src="path/to/logo.jpg" alt="사이트 로고">
+        <img src="path/to/logo.png" alt="사이트 로고">
+        안티딥
 </div>
 
 <!-- 콘텐츠를 감싸는 div -->
@@ -74,7 +97,9 @@
     <!-- 첫 번째 화면: 이미지 업로드 영역 -->
     <div class="screen upload-area" id="uploadArea">
         <h1>Drag & Drop</h1>
-        <p>이미지를 업로드해주세요</p>
+        <p>이미지를 끌어서 업로드해주세요</p>
+        <button class="upload-btn" id="customUploadBtn">파일 선택하기</button>
+        <input type="file" accept="image/*" id="imageUpload" style="display:none;">        
     </div>
 
     <!-- 두 번째 화면: 로딩 영역 -->
@@ -130,6 +155,30 @@
         uploadArea.style.borderColor = '#ccc';
     });
 
+    document.getElementById('customUploadBtn').addEventListener('click', function() {
+        document.getElementById('imageUpload').click();
+    });
+
+    document.getElementById('imageUpload').addEventListener('change', function(event) {
+        event.preventDefault();
+        uploadArea.style.borderColor = '#ccc';
+
+        // 첫 번째 화면 숨기고 로딩 화면 표시
+        uploadArea.style.display = 'none';
+        loadingArea.style.display = 'flex';
+
+        // 미리 정의된 이미지를 검색 결과에 반영
+        document.getElementById('googleImage').src = predefinedImages.google;
+        document.getElementById('naverImage').src = predefinedImages.naver;
+        document.getElementById('bingImage').src = predefinedImages.bing;
+        document.getElementById('baiduImage').src = predefinedImages.baidu;
+
+        // 검색 시뮬레이션: 로딩 후 검색 결과 화면으로 전환
+        setTimeout(() => {
+            window.location.href = 'result.html';
+        }, 2000); // 2초 딜레이로 로딩 시뮬레이션
+    });
+
     uploadArea.addEventListener('drop', (event) => {
         event.preventDefault();
         uploadArea.style.borderColor = '#ccc';
@@ -146,8 +195,7 @@
 
         // 검색 시뮬레이션: 로딩 후 검색 결과 화면으로 전환
         setTimeout(() => {
-            loadingArea.style.display = 'none'; // 로딩 화면 숨기기
-            searchResults.style.display = 'flex'; // 검색 결과 화면 표시
+            window.location.href = 'result.html';
         }, 2000); // 2초 딜레이로 로딩 시뮬레이션
     });
 </script>

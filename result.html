@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            overflow: hidden; /* 전체 페이지가 스크롤되지 않도록 설정 */
+        }
+
+        .back-button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-size: 16px;
+            border-radius: 5px;
+            margin: 10px;
+            width: fit-content;
+        }
+
+        .sections-container {
+            display: flex;
+            flex-wrap: wrap;
+            flex-grow: 1;
+            overflow: hidden; /* 섹션 외의 부분이 스크롤되지 않도록 설정 */
+        }
+
+        .section {
+            width: 50%;
+            height: 50%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden; /* 제목을 고정하기 위해 overflow를 hidden으로 설정 */
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            background-color: #fff;
+            padding: 10px;
+            box-sizing: border-box;
+            position: sticky; /* 고정된 위치 */
+            top: 0; /* 섹션 상단에 고정 */
+            z-index: 1; /* 다른 요소 위에 고정 */
+            border-bottom: 1px solid #ddd; /* 고정된 헤더의 하단에 경계선 추가 */
+        }
+
+        .header img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .content {
+            overflow-y: auto; /* 리스트가 스크롤되도록 설정 */
+            flex-grow: 1;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .item .details {
+            flex-grow: 1;
+        }
+
+        .item .details .title {
+            font-weight: bold;
+        }
+
+        .item .details .match {
+            color: gray;
+        }
+
+        .item .details .highlight {
+            color: red;
+            font-weight: bold;
+        }
+
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 40px;
+            height: 40px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <title>안티딥 - 청소년 딥페이크 피해보호 프로그램</title>
+</head>
+<body>
+    <button class="back-button" onclick="window.location.href='index.html'">뒤로가기</button>
+
+    <div class="sections-container">
+        <div class="section">
+            <div class="header">
+                <img src="https://via.placeholder.com/24" alt="Icon">
+                <h2>Section 1</h2>
+            </div>
+            <div id="section1" class="content"></div>
+            <div class="loader" id="loader1"></div>
+        </div>
+        <div class="section">
+            <div class="header">
+                <img src="https://via.placeholder.com/24" alt="Icon">
+                <h2>Section 2</h2>
+            </div>
+            <div id="section2" class="content"></div>
+            <div class="loader" id="loader2"></div>
+        </div>
+        <div class="section">
+            <div class="header">
+                <img src="https://via.placeholder.com/24" alt="Icon">
+                <h2>Section 3</h2>
+            </div>
+            <div id="section3" class="content"></div>
+            <div class="loader" id="loader3"></div>
+        </div>
+        <div class="section">
+            <div class="header">
+                <img src="https://via.placeholder.com/24" alt="Icon">
+                <h2>Section 4</h2>
+            </div>
+            <div id="section4" class="content"></div>
+            <div class="loader" id="loader4"></div>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+        {
+                "image": "https://img.hankyung.com/photo/202401/AKR20240130085951005_02_i_P4.jpg",
+                "title": "Image 1",
+                "match": "85%"
+            },
+            {
+                "image": "https://dimg.donga.com/wps/NEWS/IMAGE/2023/06/27/119966913.2.jpg",
+                "title": "Image 2",
+                "match": "78%"
+            },
+            {
+                "image": "https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2023%2F4%2F19%2F5947613%2Fhigh.jpg&w=1920&q=75",
+                "title": "Image 3",
+                "match": "90%"
+            },
+            {
+                "image": "https://img.hankyung.com/photo/202401/AKR20240130085951005_02_i_P4.jpg",
+                "title": "Image 1",
+                "match": "85%"
+            },
+            {
+                "image": "https://dimg.donga.com/wps/NEWS/IMAGE/2023/06/27/119966913.2.jpg",
+                "title": "Image 2",
+                "match": "78%"
+            },
+            {
+                "image": "https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2023%2F4%2F19%2F5947613%2Fhigh.jpg&w=1920&q=75",
+                "title": "Image 3",
+                "match": "90%"
+            },
+            {
+                "image": "https://img.hankyung.com/photo/202401/AKR20240130085951005_02_i_P4.jpg",
+                "title": "Image 1",
+                "match": "85%"
+            },
+            {
+                "image": "https://dimg.donga.com/wps/NEWS/IMAGE/2023/06/27/119966913.2.jpg",
+                "title": "Image 2",
+                "match": "78%"
+            },
+            {
+                "image": "https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2023%2F4%2F19%2F5947613%2Fhigh.jpg&w=1920&q=75",
+                "title": "Image 3",
+                "match": "90%"
+            }
+        ];
+
+        function loadList(sectionId, loaderId, data) {
+            const section = document.getElementById(sectionId);
+            const loader = document.getElementById(loaderId);
+            
+            setTimeout(() => {
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'item';
+
+                    const matchValue = parseInt(item.match);
+                    const matchClass = matchValue >= 85 ? 'highlight' : '';
+
+                    div.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="details">
+                            <div class="title">${item.title}</div>
+                            <div class="match ${matchClass}">Match: ${item.match}</div>
+                        </div>
+                    `;
+
+                    section.appendChild(div);
+                });
+                loader.style.display = 'none';
+            }, Math.random() * 2000 + 1000); // 1초에서 3초 사이의 랜덤 지연
+        }
+
+        loadList('section1', 'loader1', data);
+        loadList('section2', 'loader2', data);
+        loadList('section3', 'loader3', data);
+        loadList('section4', 'loader4', data);
+    </script>
+</body>
+</html>
