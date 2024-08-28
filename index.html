@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 검색 시뮬레이션</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* 수평 스크롤 제거 */
+        }
+        .logo {
+            width: 100%;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            border-bottom: 1px solid #ccc;
+        }
+        .logo img {
+            height: 60px; /* 로고의 높이를 조정합니다 */
+        }
+        .screen {
+            width: 100%;
+            min-height: calc(100vh - 100px); /* 전체 화면 높이에서 로고 높이만큼 빼기 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 100px; /* 로고 높이 만큼 아래에 위치 */
+            left: 0;
+            background-color: #f0f0f0;
+            display: none; /* 모든 화면을 기본적으로 숨김 */
+        }
+        .upload-area {
+            padding: 20px;
+            border: 2px dashed #ccc;
+            text-align: center;
+        }
+        .loading-area {
+            font-size: 24px;
+            text-align: center;
+        }
+        .search-results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 80%;
+            margin: auto;
+        }
+        .search-results img {
+            width: 100%;
+            height: auto;
+        }
+        .search-results h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 로고 영역 -->
+<div class="logo">
+    <img src="path/to/logo.jpg" alt="사이트 로고">
+</div>
+
+<!-- 콘텐츠를 감싸는 div -->
+<div class="content">
+    <!-- 첫 번째 화면: 이미지 업로드 영역 -->
+    <div class="screen upload-area" id="uploadArea">
+        <h1>Drag & Drop</h1>
+        <p>이미지를 업로드해주세요</p>
+    </div>
+
+    <!-- 두 번째 화면: 로딩 영역 -->
+    <div class="screen loading-area" id="loadingArea">
+        <p>검색 중입니다... 잠시만 기다려주세요.</p>
+    </div>
+
+    <!-- 세 번째 화면: 검색 결과 영역 -->
+    <div class="screen" id="searchResults">
+        <div class="search-results">
+            <div>
+                <h2>Google</h2>
+                <img id="googleImage" src="" alt="Google Search Result">
+            </div>
+            <div>
+                <h2>Naver</h2>
+                <img id="naverImage" src="" alt="Naver Search Result">
+            </div>
+            <div>
+                <h2>Bing</h2>
+                <img id="bingImage" src="" alt="Bing Search Result">
+            </div>
+            <div>
+                <h2>Baidu</h2>
+                <img id="baiduImage" src="" alt="Baidu Search Result">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 초기 설정: 첫 번째 화면만 표시
+    document.getElementById('uploadArea').style.display = 'flex';
+
+    const uploadArea = document.getElementById('uploadArea');
+    const loadingArea = document.getElementById('loadingArea');
+    const searchResults = document.getElementById('searchResults');
+
+    // 미리 정의된 이미지 설정 (사용자가 업로드한 이미지를 기반으로 각기 다른 결과 표시)
+    const predefinedImages = {
+        google: "path/to/image_B.jpg",  // Google에 표시할 이미지 경로
+        naver: "path/to/image_C.jpg",   // Naver에 표시할 이미지 경로
+        bing: "path/to/image_D.jpg",    // Bing에 표시할 이미지 경로
+        baidu: "path/to/image_E.jpg"    // Baidu에 표시할 이미지 경로
+    };
+
+    uploadArea.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        uploadArea.style.borderColor = 'green';
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.borderColor = '#ccc';
+    });
+
+    uploadArea.addEventListener('drop', (event) => {
+        event.preventDefault();
+        uploadArea.style.borderColor = '#ccc';
+
+        // 첫 번째 화면 숨기고 로딩 화면 표시
+        uploadArea.style.display = 'none';
+        loadingArea.style.display = 'flex';
+
+        // 미리 정의된 이미지를 검색 결과에 반영
+        document.getElementById('googleImage').src = predefinedImages.google;
+        document.getElementById('naverImage').src = predefinedImages.naver;
+        document.getElementById('bingImage').src = predefinedImages.bing;
+        document.getElementById('baiduImage').src = predefinedImages.baidu;
+
+        // 검색 시뮬레이션: 로딩 후 검색 결과 화면으로 전환
+        setTimeout(() => {
+            loadingArea.style.display = 'none'; // 로딩 화면 숨기기
+            searchResults.style.display = 'flex'; // 검색 결과 화면 표시
+        }, 2000); // 2초 딜레이로 로딩 시뮬레이션
+    });
+</script>
+
+</body>
+</html>
