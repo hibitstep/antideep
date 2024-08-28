@@ -15,18 +15,41 @@
             box-sizing: border-box;
             overflow: hidden; /* 전체 페이지가 스크롤되지 않도록 설정 */
         }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+        }
 
-        .back-button {
+        .button-container .button1 {
             padding: 10px 20px;
             background-color: #007BFF;
             color: white;
             border: none;
             cursor: pointer;
-            text-align: left;
             font-size: 16px;
             border-radius: 5px;
-            margin: 10px;
-            width: fit-content;
+        }
+        .button-container .button2 {
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .button-container .button3 {
+            padding: 10px 20px;
+            background-color: #74f0a4;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: black;
+            border-radius: 5px;
         }
 
         .sections-container {
@@ -140,8 +163,11 @@
     <title>안티딮 - 청소년 딥페이크 피해보호 프로그램</title>
 </head>
 <body>
-    <button class="back-button" onclick="window.location.href='index.html'">뒤로가기</button>
-
+    <div class="button-container">
+        <button class="button1" onclick="window.location.href='index.html'">뒤로가기</button>
+        <button class="button2" onclick="alert('신고하기 버튼이 클릭되었습니다.')">신고하기</button>
+        <button class="button3" onclick="alert('딥페이크 예방 버튼이 클릭되었습니다.')">딥페이크 예방</button>
+    </div>
     <div class="sections-container">
         <div class="section">
             <div class="header">
